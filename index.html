@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le coffre d'Ava | Questionnaire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Retour au questionnaire">
+        <img class="brand-mark" src="assets/logo-photo.jpg" alt="Photo de Khadija">
+        <span>Ava<span class="brand-dot">.</span></span>
+      </a>
+      <div class="topbar-title">Le coffre d'Ava</div>
+      <div class="menu-wrap">
+        <button class="menu-button" id="menuButton" aria-expanded="false" aria-controls="menuPanel">Menu <span>☰</span></button>
+        <nav class="menu-panel" id="menuPanel" aria-label="Navigation principale">
+          <a href="index.html">Questionnaire</a>
+          <button id="historyLink" type="button">Historique</button>
+          <a href="aide.html">Aide</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="questionnaire-main">
+      <img class="marine-decoration shark-left" src="assets/shark-left.png" alt="" aria-hidden="true">
+      <img class="marine-decoration shark-right" src="assets/shark-right.png" alt="" aria-hidden="true">
+      <img class="marine-decoration shark-flower" src="assets/flower-hammerhead.png" alt="" aria-hidden="true">
+      <img class="marine-decoration shark-thresher" src="assets/thresher-shark.png" alt="" aria-hidden="true">
+      <img class="marine-decoration shark-duo" src="assets/duo-shark.png" alt="" aria-hidden="true">
+      <section class="intro">
+        <div>
+          <p class="eyebrow">Mission confidentielle · 05 réponses</p>
+          <h1>Trouve le bon code.</h1>
+          <p class="intro-copy">Réponds aux questions pour découvrir le code du cadenas. Ton score apparaîtra à la fin, sans révéler quelles réponses étaient justes.</p>
+        </div>
+        <div class="seal" aria-hidden="true"><span>AV</span><small>LOCK<br>QUEST</small></div>
+      </section>
+
+      <section class="question-board" aria-labelledby="question-title">
+        <div class="board-heading">
+          <div>
+            <p class="eyebrow">Étape <span id="answeredCount">0</span>/5</p>
+            <h2 id="question-title">Le carnet de bord</h2>
+          </div>
+          <div class="progress-track" aria-label="Progression"><span id="progressBar"></span></div>
+        </div>
+        <form id="quizForm">
+          <div class="question-list" id="questionList"></div>
+          <div class="form-footer">
+            <p class="hint"><span>◈</span> Choisis une réponse : le numéro à droite correspond au cran du cadenas.</p>
+            <div class="navigation-buttons"><button class="secondary-button" id="previousQuestion" type="button">← Précédente</button><button class="primary-button" id="nextQuestion" type="button">Question suivante <span>→</span></button></div>
+          </div>
+        </form>
+      </section>
+
+      <section class="history-section" id="historySection" hidden>
+        <div class="section-heading">
+          <div><p class="eyebrow">Tes tentatives</p><h2>Historique</h2></div>
+          <button class="text-button" id="clearHistory" type="button">Effacer</button>
+        </div>
+        <div id="historyList" class="history-list"></div>
+      </section>
+    </main>
+
+    <footer><span>Le coffre d'Ava</span><span>Une mission à la fois.</span></footer>
+  </div>
+  <div class="modal-backdrop" id="resultModal" hidden>
+    <section class="result-modal" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+      <button class="close-button" id="closeModal" aria-label="Fermer">×</button>
+      <div class="result-icon" id="resultIcon">✦</div>
+      <p class="eyebrow">Mission terminée</p>
+      <h2 id="resultTitle">Ton score est prêt.</h2>
+      <p id="resultText"></p>
+      <div class="score-display"><strong id="scoreNumber">0</strong><span>/ 5 bonnes réponses</span></div>
+      <button class="primary-button" id="newAttempt" type="button">Nouvelle tentative <span>↻</span></button>
+    </section>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
