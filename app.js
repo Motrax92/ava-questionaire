@@ -49,10 +49,13 @@ function showResult() {
   const history = JSON.parse(localStorage.getItem('ava-history') || '[]');
   history.unshift({ score, date: new Intl.DateTimeFormat('fr-FR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date()) });
   localStorage.setItem('ava-history', JSON.stringify(history.slice(0, 12)));
+  const isPerfectScore = score === questions.length;
   document.querySelector('#scoreNumber').textContent = score;
   document.querySelector('#resultTitle').textContent = score === questions.length ? 'Mission réussie !' : 'Ton score est prêt.';
   document.querySelector('#resultText').textContent = score === questions.length ? 'Félicitations, le cadenas peut être ouvert. Tu as trouvé le code parfait.' : 'Bien joué. Ton résultat est enregistré dans ton historique.';
   document.querySelector('#resultIcon').textContent = score === questions.length ? '✦' : '◈';
+  document.querySelector('#regularResult').hidden = isPerfectScore;
+  document.querySelector('#successResult').hidden = !isPerfectScore;
   modal.hidden = false;
 }
 
