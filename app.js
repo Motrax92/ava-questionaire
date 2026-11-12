@@ -1,5 +1,4 @@
 const questions = [
-  { text: "Quelle est la couleur préférée d'Ava ?", clue: "Un indice dans ses carnets", options: [{ label: 'Le bleu des grands jours', number: 7 }, { label: 'Le rouge des aventures', number: 3 }, { label: 'Le vert du jardin', number: 5 }, { label: 'Le jaune du soleil', number: 1 }, { label: "Le violet de l'aurore", number: 8 }], correct: 0 },
   { text: "Où avons-nous fait notre premier date ?", clue: "Un souvenir à retrouver", options: [{ label: 'Dans un cinéma', number: 2 }, { label: 'Dans un restaurant', number: 4 }, { label: 'Dans un parc', number: 6 }, { label: 'Chez moi', number: 1 }, { label: 'Au lycée', number: 9 }], correct: 2 },
   { text: "À quelle date nous sommes-nous mis ensemble ?", clue: "Un souvenir important pour nous", options: [{ label: 'Le 18 juin 2023', number: 1 }, { label: 'Le 25 juillet 2012', number: 2 }, { label: 'Le 14 novembre 2026', number: 3 }, { label: 'Le 16 novembre 2023', number: 4 }, { label: 'Depuis ta naissance', number: 5 }], correct: 3 },
   { text: "Quel est ton plat préféré ?", clue: "Un indice gourmand", options: [{ label: 'Les pâtes', number: 1 }, { label: 'La pizza', number: 2 }, { label: 'Le couscous', number: 3 }, { label: 'Les sushis', number: 4 }, { label: 'Le hamburger', number: 5 }], correct: 0 },
@@ -8,6 +7,9 @@ const questions = [
 const questionList = document.querySelector('#questionList');
 const progressBar = document.querySelector('#progressBar');
 const answeredCount = document.querySelector('#answeredCount');
+document.querySelector('#questionTotalLabel').textContent = String(questions.length).padStart(2, '0');
+document.querySelector('#questionTotal').textContent = questions.length;
+document.querySelector('#scoreTotal').textContent = questions.length;
 const historySection = document.querySelector('#historySection');
 const historyList = document.querySelector('#historyList');
 const modal = document.querySelector('#resultModal');
@@ -46,12 +48,14 @@ nextQuestion.addEventListener('click', () => {
 
 function showResult() {
   const score = selections.reduce((total, selection, index) => total + (selection === questions[index].correct ? 1 : 0), 0);
+  const code = questions.map((question) => question.options[question.correct].number).join('');
   const history = JSON.parse(localStorage.getItem('ava-history') || '[]');
-  history.unshift({ score, date: new Intl.DateTimeFormat('fr-FR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date()) });
+  history.unshift({ score, total: questions.length, date: new Intl.DateTimeFormat('fr-FR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date()) });
   localStorage.setItem('ava-history', JSON.stringify(history.slice(0, 12)));
   document.querySelector('#scoreNumber').textContent = score;
   document.querySelector('#resultTitle').textContent = score === questions.length ? 'Mission réussie !' : 'Ton score est prêt.';
-  document.querySelector('#resultText').textContent = score === questions.length ? 'Félicitations, le cadenas peut être ouvert. Tu as trouvé le code parfait.' : 'Bien joué. Ton résultat est enregistré dans ton historique.';
+  document.querySelector('#resultText').textContent = score === questions.length ? 'Félicitations, tu as trouvé toutes les bonnes réponses !' : 'Bien joué. Ton résultat est enregistré dans ton historique. Voici le code du cadenas.';
+  document.querySelector('#lockCode').textContent = code;
   document.querySelector('#resultIcon').textContent = score === questions.length ? '✦' : '◈';
   modal.hidden = false;
 }
@@ -65,7 +69,7 @@ document.querySelector('#historyLink').addEventListener('click', () => { history
 document.querySelector('#clearHistory').addEventListener('click', () => { localStorage.removeItem('ava-history'); renderHistory(); });
 document.querySelector('#closeModal').addEventListener('click', () => { modal.hidden = true; });
 document.querySelector('#newAttempt').addEventListener('click', () => { modal.hidden = true; currentQuestion = 0; selections.fill(null); renderQuestion(); updateProgress(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
-function renderHistory() { const history = JSON.parse(localStorage.getItem('ava-history') || '[]'); historyList.innerHTML = history.length ? history.map((item) => `<div class="history-item"><span>${item.date}</span><strong>${item.score} / 5</strong></div>`).join('') : '<p class="hint">Aucune tentative pour le moment.</p>'; }
+function renderHistory() { const history = JSON.parse(localStorage.getItem('ava-history') || '[]'); historyList.innerHTML = history.length ? history.map((item) => `<div class="history-item"><span>${item.date}</span><strong>${item.score} / ${item.total ?? 5}</strong></div>`).join('') : '<p class="hint">Aucune tentative pour le moment.</p>'; }
 
 renderQuestion();
 updateProgress();

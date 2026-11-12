@@ -35,9 +35,9 @@
       <img class="marine-decoration shark-duo" src="assets/duo-shark.png" alt="" aria-hidden="true">
       <section class="intro">
         <div>
-          <p class="eyebrow">Mission confidentielle · 05 réponses</p>
+          <p class="eyebrow">Mission confidentielle · <span id="questionTotalLabel">04</span> réponses</p>
           <h1>Trouve le bon code.</h1>
-          <p class="intro-copy">Réponds aux questions pour découvrir le code du cadenas. Ton score apparaîtra à la fin, sans révéler quelles réponses étaient justes.</p>
+          <p class="intro-copy">Réponds aux questions pour découvrir le code du cadenas. Ton score et le code s'afficheront à la fin.</p>
         </div>
         <div class="seal" aria-hidden="true"><span>AV</span><small>LOCK<br>QUEST</small></div>
       </section>
@@ -45,7 +45,7 @@
       <section class="question-board" aria-labelledby="question-title">
         <div class="board-heading">
           <div>
-            <p class="eyebrow">Étape <span id="answeredCount">0</span>/5</p>
+            <p class="eyebrow">Réponses <span id="answeredCount">0</span>/<span id="questionTotal">4</span></p>
             <h2 id="question-title">Le carnet de bord</h2>
           </div>
           <div class="progress-track" aria-label="Progression"><span id="progressBar"></span></div>
@@ -77,7 +77,9 @@
       <p class="eyebrow">Mission terminée</p>
       <h2 id="resultTitle">Ton score est prêt.</h2>
       <p id="resultText"></p>
-      <div class="score-display"><strong id="scoreNumber">0</strong><span>/ 5 bonnes réponses</span></div>
+      <div class="score-display"><strong id="scoreNumber">0</strong><span>/ <span id="scoreTotal">4</span> bonnes réponses</span></div>
+      <div class="score-display"><strong id="lockCode"></strong><span>Code du cadenas</span></div>
+      <p class="birthday-letter">GG tu as répondu à toutes les questions sans faire de faute j'espère que tu as kiffé le petit questionnaire que j'ai fait pour toi.<br><br>Bon je te fais aussi une petite lettre pour ton anniversaire, déjà joyeux anniversaire je suis très content d'être toujours à t'es côté et j'espère l'être encore longtemps même si il y a eu des bas il y a eu aussi de bonnes choses. On a pas fini de découvrir des choses ensemble. Je t'offre un cadeau en espérant que ça te plaise (ta intérêt sinon je le reprends enflure). Sache que je t'aime de tout mon cœur et j'espère encore une fois que ton cadeau te plaît.<br><br>Joyeux anniversaire mon bb 😋<br><br>Ps : non je me suis pas br avec cette fois-ci</p>
       <button class="primary-button" id="newAttempt" type="button">Nouvelle tentative <span>↻</span></button>
     </section>
   </div>
