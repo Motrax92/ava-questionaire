@@ -1,7 +1,7 @@
 const questions = [
   { text: "Où avons-nous fait notre premier date ?", clue: "Un souvenir à retrouver", options: [{ label: 'Dans un cinéma', number: 2 }, { label: 'Dans un restaurant', number: 4 }, { label: 'Dans un parc', number: 6 }, { label: 'Chez moi', number: 1 }, { label: 'Au lycée', number: 9 }], correct: 2 },
-  { text: "À quelle date nous sommes-nous mis ensemble ?", clue: "Un souvenir important pour nous", options: [{ label: 'Le 18 juin 2023', number: 1 }, { label: 'Le 25 juillet 2012', number: 2 }, { label: 'Le 14 novembre 2026', number: 3 }, { label: 'Le 16 novembre 2023', number: 4 }, { label: 'Depuis ta naissance', number: 5 }], correct: 3 },
-  { text: "Quel est ton plat préféré ?", clue: "Un indice gourmand", options: [{ label: 'Les pâtes', number: 1 }, { label: 'La pizza', number: 2 }, { label: 'Le couscous', number: 3 }, { label: 'Les sushis', number: 4 }, { label: 'Le hamburger', number: 5 }], correct: 0 },
+  { text: "À quelle date nous sommes-nous mis ensemble ?", clue: "Un souvenir important pour nous", options: [{ label: 'Le 18 juin 2023', number: 1 }, { label: 'Le 25 juillet 2012', number: 2 }, { label: 'Le 14 novembre 2026', number: 3 }, { label: 'Le 16 novembre 2024', number: 4 }, { label: 'Depuis ta naissance', number: 5 }], correct: 3 },
+  { text: "Quel est ma boisson préferée ?", clue: "Un indice gourmand", options: [{ label: 'oasis', number: 1 }, { label: 'La Redbull', number: 2 }, { label: 'la volvic fraise', number: 3 }, { label: 'La crhistaline fraise', number: 4 }, { label: 'Le thé', number: 5 }], correct: 2 },
   { text: "Quel est le nombre de points que les juges vont m'accorder ?", clue: "Le résultat de la mission", options: [{ label: '2 points', number: 1 }, { label: '0,5 point', number: 2 }, { label: '0,02 point', number: 3 }, { label: '0,01 point', number: 4 }, { label: '0 point', number: 5 }], correct: 2 }
 ];
 const questionList = document.querySelector('#questionList');
@@ -48,15 +48,21 @@ nextQuestion.addEventListener('click', () => {
 
 function showResult() {
   const score = selections.reduce((total, selection, index) => total + (selection === questions[index].correct ? 1 : 0), 0);
-  const code = questions.map((question) => question.options[question.correct].number).join('');
+  const code = questions.map((question) => question.options[question.correct].number).join(' · ');
   const history = JSON.parse(localStorage.getItem('ava-history') || '[]');
   history.unshift({ score, total: questions.length, date: new Intl.DateTimeFormat('fr-FR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date()) });
   localStorage.setItem('ava-history', JSON.stringify(history.slice(0, 12)));
+  const isPerfectScore = score === questions.length;
   document.querySelector('#scoreNumber').textContent = score;
+  document.querySelector('#successScore').textContent = score;
+  document.querySelector('#successTotal').textContent = questions.length;
   document.querySelector('#resultTitle').textContent = score === questions.length ? 'Mission réussie !' : 'Ton score est prêt.';
   document.querySelector('#resultText').textContent = score === questions.length ? 'Félicitations, tu as trouvé toutes les bonnes réponses !' : 'Bien joué. Ton résultat est enregistré dans ton historique. Voici le code du cadenas.';
   document.querySelector('#lockCode').textContent = code;
+  document.querySelector('#successLockCode').textContent = code;
   document.querySelector('#resultIcon').textContent = score === questions.length ? '✦' : '◈';
+  document.querySelector('#regularResult').hidden = isPerfectScore;
+  document.querySelector('#successResult').hidden = !isPerfectScore;
   modal.hidden = false;
 }
 
